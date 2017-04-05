@@ -9,8 +9,8 @@
         <module name="NoMySQL" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.7">
-      <module name="NoMySQL" target="1.7" />
+    <bytecodeTargetLevel>
+      <module name="NoMySQL" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
