@@ -18,6 +18,7 @@ public interface MessageDao
 {
     public List<Message> listMessages();
 
-    public void SaveOrUpdateMessage(Message message);
+    public void saveOrUpdateMessage(Message message);
 
+    void shutdown();
 }

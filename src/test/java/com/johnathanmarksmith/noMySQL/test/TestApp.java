@@ -45,7 +45,7 @@ public class TestApp {
         Message message = new Message();
         message.setMessage("I Love Dogs");
 
-        mService.SaveMessage(message);
+        mService.saveMessage(message);
 
         /**
          * Return a list of messages from database and count them

@@ -47,7 +47,7 @@ public class Main
          */
         Message message = new Message();
         message.setMessage("Hello World");
-        mService.SaveMessage(message);
+        mService.saveMessage(message);
 
 
         /**
@@ -56,7 +56,7 @@ public class Main
          *
          */
         message.setMessage("I love Regan");
-        mService.SaveMessage(message);
+        mService.saveMessage(message);
 
         /**
          *
@@ -79,5 +79,7 @@ public class Main
          *
          */
         LOGGER.debug("This is the end!!!!");
+
+        mService.shutdown();
     }
 }

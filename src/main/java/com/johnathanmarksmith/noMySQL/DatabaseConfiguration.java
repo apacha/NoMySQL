@@ -16,6 +16,7 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Properties;
 
 
@@ -23,31 +24,27 @@ import java.util.Properties;
  * Date:   5/24/13 / 8:05 AM
  * Author: Johnathan Mark Smith
  * Email:  john@johnathanmarksmith.com
- *
+ * <p>
  * Comments:
- *
- *    This is a example on how to setup a database with Spring's Java Configuration (JavaConfig) style.
- *
- *    As you can see from the code below this is easy and a lot better then using the old style of XML files.
- *
+ * <p>
+ * This is a example on how to setup a database with Spring's Java Configuration (JavaConfig) style.
+ * <p>
+ * As you can see from the code below this is easy and a lot better then using the old style of XML files.
  */
 
 @Configuration
 @EnableTransactionManagement
 @ComponentScan(basePackageClasses = {Main.class})
 @PropertySource("classpath:application.properties")
-public class DatabaseConfiguration
-{
+public class DatabaseConfiguration {
 
 
     /**
-     *
      * This is used to setup the database. It will load the schema.sql file which does a create table so we have
      * a table to work with in the project
      */
     @Bean
-    public DataSourceInitializer dataSourceInitializer(DataSource dataSource)
-    {
+    public DataSourceInitializer dataSourceInitializer(DataSource dataSource) {
         ResourceDatabasePopulator resourceDatabasePopulator = new ResourceDatabasePopulator();
         resourceDatabasePopulator.addScript(new ClassPathResource("/schema.sql"));
 
@@ -58,28 +55,25 @@ public class DatabaseConfiguration
     }
 
     /**
-     *
      * This will be setting up a datasource using HyperSQL (hsqldb) in memory
      */
     @Bean
-    public DataSource hsqlDataSource()
-    {
+    public DataSource hsqlDataSource() {
         BasicDataSource basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName(org.hsqldb.jdbcDriver.class.getName());
         basicDataSource.setUsername("sa");
         basicDataSource.setPassword("");
-        basicDataSource.setUrl("jdbc:hsqldb:mem:mydb");
+//        basicDataSource.setUrl("jdbc:hsqldb:mem:mydb");
+        basicDataSource.setUrl("jdbc:hsqldb:file:D:/Entwicklungen/NoMySQL/data/tempDatabase");
         return basicDataSource;
     }
 
     /**
-     *
      * This setups the session factory
      */
     @Bean
     public LocalSessionFactoryBean sessionFactory(Environment environment,
-                                                  DataSource dataSource)
-    {
+                                                  DataSource dataSource) {
 
         /**
          *
@@ -97,11 +91,9 @@ public class DatabaseConfiguration
     }
 
     /**
-     *
      * Loading all the hibernate properties from a properties file
      */
-    protected Properties buildHibernateProperties(Environment env)
-    {
+    protected Properties buildHibernateProperties(Environment env) {
         Properties hibernateProperties = new Properties();
 
         hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
@@ -122,13 +114,10 @@ public class DatabaseConfiguration
     }
 
     /**
-     *
      * This is setting up the hibernate transaction manager
-     *
      */
     @Bean
-    public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory)
-    {
+    public HibernateTransactionManager hibernateTransactionManager(SessionFactory sessionFactory) {
         return new HibernateTransactionManager(sessionFactory);
     }
 
